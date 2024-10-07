@@ -7,7 +7,14 @@ package dk.easv.tictactoe.bll;
  */
 public class GameBoard implements IGameBoard
 {
+    private char[][] gameBoard = new char[3][3];
 
+    public char[][] getGameBoard(){
+        return gameBoard;
+}
+    public void setGameBoard(char[][] gameBoard){
+        this.gameBoard = gameBoard;
+    }
     /**
      * Returns 0 for player 0, 1 for player 1.
      *
@@ -21,7 +28,7 @@ public class GameBoard implements IGameBoard
 
     /**
      * Attempts to let the current player play at the given coordinates. It the
-     * attempt is succesfull the current player has ended his turn and it is the
+     * attempt is successfull the current player has ended his turn and it is the
      * next players turn.
      *
      * @param col column to place a marker in.
@@ -31,6 +38,7 @@ public class GameBoard implements IGameBoard
      */
     public boolean play(int col, int row)
     {
+
         //TODO Implement this method
         return true;
     }
@@ -39,7 +47,7 @@ public class GameBoard implements IGameBoard
      * Tells us if the game has ended either by draw or by meeting the winning
      * condition.
      *
-     * @return true if the game is over, else it will retun false.
+     * @return true if the game is over, else it will return false.
      */
     public boolean isGameOver()
     {

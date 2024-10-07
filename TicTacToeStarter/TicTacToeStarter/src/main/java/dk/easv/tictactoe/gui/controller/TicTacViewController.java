@@ -42,6 +42,7 @@ public class TicTacViewController implements Initializable
     @FXML
     private void handleButtonAction(ActionEvent event)
     {
+
         try
         {
             Integer row = GridPane.getRowIndex((Node) event.getSource());
@@ -51,6 +52,9 @@ public class TicTacViewController implements Initializable
             int player = game.getNextPlayer();
             if (game.play(c, r))
             {
+                GameBoard.getGameBoard();
+                GameBoard.setGameBoard(gameBoard[r][c] = (player == 0) ? "X" : "O");
+
                 if (game.isGameOver())
                 {
                     int winner = game.getWinner();
