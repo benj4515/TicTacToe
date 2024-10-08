@@ -1,30 +1,48 @@
 
 package dk.easv.tictactoe.bll;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  *
  * @author EASV
  */
 public class GameBoard implements IGameBoard
 {
-    private char[][] gameBoard = new char[3][3];
-
-    public char[][] getGameBoard(){
-        return gameBoard;
-}
-    public void setGameBoard(char[][] gameBoard){
-        this.gameBoard = gameBoard;
+    int id = 1;
+    private char[][] board = new char[3][3];
+    public char[][] getBoard(){
+        return board;
     }
-    /**
-     * Returns 0 for player 0, 1 for player 1.
+    public void setBoard(char[][] board){
+        this.board = board;
+    }
+
+    /* Returns 0 for player 0, 1 for player 1.
      *
      * @return int Id of the next player.
      */
     public int getNextPlayer()
     {
-        //TODO Implement this method
-        return 0;
+
+        if (id == 0){
+            id = 1;
+            return 0;
+        }
+        else{
+            id = 0;
+            return 1;
+        }
+
+
     }
+    /*for (int a = 0; a< 8; a++){
+        String line = switch (a){
+            case 0 -> Array.get(char [0][0]board )
+            case 1 -> (char)Array.getChar(char []board, int 0,0)
+        }*/
+
 
     /**
      * Attempts to let the current player play at the given coordinates. It the
@@ -38,9 +56,23 @@ public class GameBoard implements IGameBoard
      */
     public boolean play(int col, int row)
     {
+        if (getBoard()[row][col] == 0){
+            if (id == 0){
+                getBoard()[row][col] = 'O';
 
-        //TODO Implement this method
-        return true;
+            } else if (id == 1){
+                getBoard()[row][col] = 'X';
+            }
+            setBoard(board);
+
+            System.out.println(Arrays.deepToString(board));
+            return true;
+
+        }
+       else{
+           return false;
+        }
+
     }
 
     /**
@@ -51,6 +83,7 @@ public class GameBoard implements IGameBoard
      */
     public boolean isGameOver()
     {
+
         //TODO Implement this method
         return false;
     }
@@ -71,6 +104,6 @@ public class GameBoard implements IGameBoard
      */
     public void newGame()
     {
-        //TODO Implement this method
+        board = new char[3][3];
     }
 }

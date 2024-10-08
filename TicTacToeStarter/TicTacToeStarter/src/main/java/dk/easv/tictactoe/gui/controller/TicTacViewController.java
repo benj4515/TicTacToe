@@ -3,6 +3,7 @@ package dk.easv.tictactoe.gui.controller;
 
 // Java imports
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,6 +44,7 @@ public class TicTacViewController implements Initializable
     private void handleButtonAction(ActionEvent event)
     {
 
+
         try
         {
             Integer row = GridPane.getRowIndex((Node) event.getSource());
@@ -52,8 +54,6 @@ public class TicTacViewController implements Initializable
             int player = game.getNextPlayer();
             if (game.play(c, r))
             {
-                GameBoard.getGameBoard();
-                GameBoard.setGameBoard(gameBoard[r][c] = (player == 0) ? "X" : "O");
 
                 if (game.isGameOver())
                 {
@@ -65,6 +65,7 @@ public class TicTacViewController implements Initializable
                     Button btn = (Button) event.getSource();
                     String xOrO = player == 0 ? "X" : "O";
                     btn.setText(xOrO);
+                    game.getNextPlayer();
                     setPlayer();
                 }
             }
@@ -72,6 +73,7 @@ public class TicTacViewController implements Initializable
         {
             System.out.println(e.getMessage());
         }
+
     }
 
     /**
