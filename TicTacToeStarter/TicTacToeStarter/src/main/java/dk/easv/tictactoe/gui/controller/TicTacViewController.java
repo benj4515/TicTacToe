@@ -23,6 +23,7 @@ import dk.easv.tictactoe.bll.IGameBoard;
  */
 public class TicTacViewController implements Initializable
 {
+    private int i;
     @FXML
     private Label lblPlayer;
 
@@ -54,19 +55,23 @@ public class TicTacViewController implements Initializable
             int player = game.getNextPlayer();
             if (game.play(c, r))
             {
-
+                i++;
                 if (game.isGameOver())
                 {
                     int winner = game.getWinner();
                     displayWinner(winner);
+                    Button btn = (Button) event.getSource();
+                    String xOrO = player == 0 ? "🐗" : "🐻";
+                    btn.setText(xOrO);
                 }
                 else
                 {
                     Button btn = (Button) event.getSource();
-                    String xOrO = player == 0 ? "X" : "O";
+                    String xOrO = player == 0 ? "🐗" : "🐻";
                     btn.setText(xOrO);
                     game.getNextPlayer();
                     setPlayer();
+
                 }
             }
         } catch (Exception e)
@@ -87,6 +92,7 @@ public class TicTacViewController implements Initializable
         game.newGame();
         setPlayer();
         clearBoard();
+        i = 0;
     }
 
     /**
@@ -112,7 +118,13 @@ public class TicTacViewController implements Initializable
      */
     private void setPlayer()
     {
-        lblPlayer.setText(TXT_PLAYER + game.getNextPlayer());
+        if(game.getNextPlayer() == 1){
+            lblPlayer.setText(TXT_PLAYER + "🐻");
+        }
+        else {
+            lblPlayer.setText(TXT_PLAYER + "🐗");
+        }
+
     }
 
 
@@ -122,17 +134,17 @@ public class TicTacViewController implements Initializable
      */
     private void displayWinner(int winner)
     {
-        String message = "";
-        switch (winner)
-        {
-            case -1:
-                message = "It's a draw :-(";
-                break;
-            default:
-                message = "Player " + winner + " wins!!!";
-                break;
+        if(i>=9){
+            winner = -1;
         }
-        lblPlayer.setText(message);
+
+        if (winner == 1)
+            lblPlayer.setText("Player " + "🐗" + " wins!!!");
+        else if (winner == 0) {
+            lblPlayer.setText("Player " + "🐻" + " wins!!!");
+        }else if (winner == -1){
+            lblPlayer.setText("It's a draw :-(");
+        }
     }
 
     /**

@@ -10,7 +10,8 @@ import java.util.Arrays;
  */
 public class GameBoard implements IGameBoard
 {
-    int id = 1;
+    int i = 0;
+    int id = 0;
     private char[][] board = new char[3][3];
     public char[][] getBoard(){
         return board;
@@ -18,6 +19,7 @@ public class GameBoard implements IGameBoard
     public void setBoard(char[][] board){
         this.board = board;
     }
+
     public int checkBoard(){
         // Vertical win for X
         if (board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X'){
@@ -52,7 +54,7 @@ public class GameBoard implements IGameBoard
         // Horizontal win for O
         if (board[0][1] == 'O' && board[1][1] == 'O' && board[2][1] == 'O'){
             return 2;
-        } else if (board[0][2] == 'X' && board[1][2] == 'X' && board[2][2] == 'O') {
+        } else if (board[0][2] == 'O' && board[1][2] == 'O' && board[2][2] == 'O') {
             return 2;
         }else if (board[0][0] == 'O' && board[1][0] == 'O' && board[2][0] == 'O') {
             return 2;
@@ -75,15 +77,21 @@ public class GameBoard implements IGameBoard
     public int getNextPlayer()
     {
 
-        if (id == 0){
+        if (id == 0 && i != 0){
             id = 1;
             return 0;
         }
-        else{
+        else if (i != 0){
             id = 0;
             return 1;
         }
-
+        else{
+            return id;
+            if (id == 0)
+                id = 1;
+                        else
+                            id = 0;
+        }
 
     }
     /*for (int a = 0; a< 8; a++){
@@ -105,6 +113,7 @@ public class GameBoard implements IGameBoard
      */
     public boolean play(int col, int row)
     {
+        i++;
         if (getBoard()[row][col] == 0){
             if (id == 0){
                 getBoard()[row][col] = 'O';
@@ -116,6 +125,8 @@ public class GameBoard implements IGameBoard
 
             System.out.println(Arrays.deepToString(board));
             System.out.println(checkBoard());
+            System.out.println("i=" + i);
+            System.out.println("winner is " + getWinner());
             return true;
 
         }
@@ -135,7 +146,7 @@ public class GameBoard implements IGameBoard
     {
         //TODO Implement this method
 
-            if (checkBoard() != -1){
+            if (checkBoard() != -1 | i >= 9){
             return true;
         }
         else {
@@ -166,5 +177,12 @@ public class GameBoard implements IGameBoard
     public void newGame()
     {
         board = new char[3][3];
+        if(checkBoard() == 1)
+        {
+            id = 1;
+        } else if (checkBoard() == 2) {
+            id = 0;
+        }
+        i = 0;
     }
 }
