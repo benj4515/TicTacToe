@@ -1,104 +1,82 @@
 
 package dk.easv.tictactoe.bll;
 
-import java.lang.reflect.Array;
+
 import java.util.Arrays;
 
 /**
- *
  * @author EASV
  */
-public class GameBoard implements IGameBoard
-{
+public class GameBoard implements IGameBoard {
     int i = 0;
     int id = 0;
     private char[][] board = new char[3][3];
-    public char[][] getBoard(){
+
+    public char[][] getBoard() {
         return board;
     }
-    public void setBoard(char[][] board){
+
+    public void setBoard(char[][] board) {
         this.board = board;
     }
 
-    public int checkBoard(){
+    public int checkBoard() {
         // Vertical win for X
-        if (board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X'){
+        if (board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X') {
             return 1;
         } else if (board[1][0] == 'X' && board[1][1] == 'X' && board[1][2] == 'X') {
             return 1;
-        }else if (board[2][0] == 'X' && board[2][1] == 'X' && board[2][2] == 'X') {
+        } else if (board[2][0] == 'X' && board[2][1] == 'X' && board[2][2] == 'X') {
             return 1;
         }
         // Horizontal win for X
-        if (board[0][1] == 'X' && board[1][1] == 'X' && board[2][1] == 'X'){
+        if (board[0][1] == 'X' && board[1][1] == 'X' && board[2][1] == 'X') {
             return 1;
         } else if (board[0][2] == 'X' && board[1][2] == 'X' && board[2][2] == 'X') {
             return 1;
-        }else if (board[0][0] == 'X' && board[1][0] == 'X' && board[2][0] == 'X') {
+        } else if (board[0][0] == 'X' && board[1][0] == 'X' && board[2][0] == 'X') {
             return 1;
         }
         // Diagonal win for X
-        if (board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 'X'){
+        if (board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 'X') {
             return 1;
         } else if (board[2][0] == 'X' && board[1][1] == 'X' && board[0][2] == 'X') {
             return 1;
         }
         // Vertical win for O
-        if (board[0][0] == 'O' && board[0][1] == 'O' && board[0][2] == 'O'){
+        if (board[0][0] == 'O' && board[0][1] == 'O' && board[0][2] == 'O') {
             return 2;
         } else if (board[1][0] == 'O' && board[1][1] == 'O' && board[1][2] == 'O') {
             return 2;
-        }else if (board[2][0] == 'O' && board[2][1] == 'O' && board[2][2] == 'O') {
+        } else if (board[2][0] == 'O' && board[2][1] == 'O' && board[2][2] == 'O') {
             return 2;
         }
         // Horizontal win for O
-        if (board[0][1] == 'O' && board[1][1] == 'O' && board[2][1] == 'O'){
+        if (board[0][1] == 'O' && board[1][1] == 'O' && board[2][1] == 'O') {
             return 2;
         } else if (board[0][2] == 'O' && board[1][2] == 'O' && board[2][2] == 'O') {
             return 2;
-        }else if (board[0][0] == 'O' && board[1][0] == 'O' && board[2][0] == 'O') {
+        } else if (board[0][0] == 'O' && board[1][0] == 'O' && board[2][0] == 'O') {
             return 2;
         }
         // Diagonal win for O
-        if (board[0][0] == 'O' && board[1][1] == 'O' && board[2][2] == 'O'){
+        if (board[0][0] == 'O' && board[1][1] == 'O' && board[2][2] == 'O') {
             return 2;
         } else if (board[2][0] == 'O' && board[1][1] == 'O' && board[0][2] == 'O') {
             return 2;
-        }
-        else {
+        } else {
             return -1;
         }
     }
 
-    /** Returns 0 for player 0, 1 for player 1.
+    /**
+     * Returns 0 for player 0, 1 for player 1.
      *
      * @return int Id of the next player.
      */
-    public int getNextPlayer()
-    {
-
-        if (id == 0 && i != 0){
-            id = 1;
-            return 0;
-        }
-        else if (i != 0){
-            id = 0;
-            return 1;
-        }
-        else{
-            return id;
-            if (id == 0)
-                id = 1;
-                        else
-                            id = 0;
-        }
-
+    public int getNextPlayer() {
+        return id;
     }
-    /*for (int a = 0; a< 8; a++){
-        String line = switch (a){
-            case 0 -> Array.get(char [0][0]board )
-            case 1 -> (char)Array.getChar(char []board, int 0,0)
-        }*/
 
 
     /**
@@ -111,29 +89,24 @@ public class GameBoard implements IGameBoard
      * @return true if the move is accepted, otherwise false. If gameOver == true
      * this method will always return false.
      */
-    public boolean play(int col, int row)
-    {
-        i++;
-        if (getBoard()[row][col] == 0){
-            if (id == 0){
-                getBoard()[row][col] = 'O';
+    public boolean play(int col, int row) {
 
-            } else if (id == 1){
-                getBoard()[row][col] = 'X';
+        if (getBoard()[row][col] == 0) {
+            i++;
+            if (checkBoard() == -1) {
+                if (id == 0) {
+                    getBoard()[row][col] = 'O';
+                    id = 1;
+                } else if (id == 1) {
+                    getBoard()[row][col] = 'X';
+                    id = 0;
+                }
             }
             setBoard(board);
-
-            System.out.println(Arrays.deepToString(board));
-            System.out.println(checkBoard());
-            System.out.println("i=" + i);
-            System.out.println("winner is " + getWinner());
             return true;
-
+        } else {
+            return false;
         }
-       else{
-           return false;
-        }
-
     }
 
     /**
@@ -142,14 +115,12 @@ public class GameBoard implements IGameBoard
      *
      * @return true if the game is over, else it will return false.
      */
-    public boolean isGameOver()
-    {
+    public boolean isGameOver() {
         //TODO Implement this method
 
-            if (checkBoard() != -1 | i >= 9){
+        if (checkBoard() != -1 | i >= 9) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -159,9 +130,8 @@ public class GameBoard implements IGameBoard
      *
      * @return int id of winner, or -1 if draw.
      */
-    public int getWinner()
-    {
-        if(checkBoard() == 1){
+    public int getWinner() {
+        if (checkBoard() == 1) {
             return 1;
         } else if (checkBoard() == 2) {
             return 0;
@@ -174,11 +144,9 @@ public class GameBoard implements IGameBoard
     /**
      * Resets the game to a new game state.
      */
-    public void newGame()
-    {
+    public void newGame() {
         board = new char[3][3];
-        if(checkBoard() == 1)
-        {
+        if (checkBoard() == 1) {
             id = 1;
         } else if (checkBoard() == 2) {
             id = 0;

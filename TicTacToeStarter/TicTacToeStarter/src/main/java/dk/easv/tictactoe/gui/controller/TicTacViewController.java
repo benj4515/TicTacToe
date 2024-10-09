@@ -2,9 +2,10 @@
 package dk.easv.tictactoe.gui.controller;
 
 // Java imports
+
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,11 +19,9 @@ import dk.easv.tictactoe.bll.GameBoard;
 import dk.easv.tictactoe.bll.IGameBoard;
 
 /**
- *
  * @author EASV
  */
-public class TicTacViewController implements Initializable
-{
+public class TicTacViewController implements Initializable {
     private int i;
     @FXML
     private Label lblPlayer;
@@ -32,7 +31,7 @@ public class TicTacViewController implements Initializable
 
     @FXML
     private GridPane gridPane;
-    
+
     private static final String TXT_PLAYER = "Player: ";
     private IGameBoard game;
 
@@ -42,42 +41,34 @@ public class TicTacViewController implements Initializable
      * @param event
      */
     @FXML
-    private void handleButtonAction(ActionEvent event)
-    {
-
-
-        try
-        {
+    private void handleButtonAction(ActionEvent event) {
+        try {
             Integer row = GridPane.getRowIndex((Node) event.getSource());
             Integer col = GridPane.getColumnIndex((Node) event.getSource());
             int r = (row == null) ? 0 : row;
             int c = (col == null) ? 0 : col;
             int player = game.getNextPlayer();
-            if (game.play(c, r))
-            {
-                i++;
-                if (game.isGameOver())
-                {
+            if (game.play(c, r)) {
+                if (game.isGameOver()) {
                     int winner = game.getWinner();
                     displayWinner(winner);
                     Button btn = (Button) event.getSource();
                     String xOrO = player == 0 ? "🐗" : "🐻";
                     btn.setText(xOrO);
-                }
-                else
-                {
+                    gridPane.setDisable(true);
+                } else {
                     Button btn = (Button) event.getSource();
                     String xOrO = player == 0 ? "🐗" : "🐻";
                     btn.setText(xOrO);
                     game.getNextPlayer();
                     setPlayer();
-
+                    i++;
                 }
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
 
     }
 
@@ -87,28 +78,24 @@ public class TicTacViewController implements Initializable
      * @param event
      */
     @FXML
-    private void handleNewGame(ActionEvent event)
-    {
+    private void handleNewGame(ActionEvent event) {
         game.newGame();
         setPlayer();
         clearBoard();
         i = 0;
+        gridPane.setDisable(false);
     }
 
     /**
      * Initializes a new controller
      *
-     * @param url
-     * The location used to resolve relative paths for the root object, or
-     * {@code null} if the location is not known.
-     *
-     * @param rb
-     * The resources used to localize the root object, or {@code null} if
-     * the root object was not localized.
+     * @param url The location used to resolve relative paths for the root object, or
+     *            {@code null} if the location is not known.
+     * @param rb  The resources used to localize the root object, or {@code null} if
+     *            the root object was not localized.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         game = new GameBoard();
         setPlayer();
     }
@@ -116,33 +103,29 @@ public class TicTacViewController implements Initializable
     /**
      * Set the next player
      */
-    private void setPlayer()
-    {
-        if(game.getNextPlayer() == 1){
+    private void setPlayer() {
+        if (game.getNextPlayer() == 1) {
             lblPlayer.setText(TXT_PLAYER + "🐻");
-        }
-        else {
+        } else {
             lblPlayer.setText(TXT_PLAYER + "🐗");
         }
-
     }
 
 
     /**
      * Finds a winner or a draw and displays a message based
+     *
      * @param winner
      */
-    private void displayWinner(int winner)
-    {
-        if(i>=9){
+    private void displayWinner(int winner) {
+        if (i >= 9) {
             winner = -1;
         }
-
         if (winner == 1)
-            lblPlayer.setText("Player " + "🐗" + " wins!!!");
-        else if (winner == 0) {
             lblPlayer.setText("Player " + "🐻" + " wins!!!");
-        }else if (winner == -1){
+        else if (winner == 0) {
+            lblPlayer.setText("Player " + "🐗" + " wins!!!");
+        } else if (winner == -1) {
             lblPlayer.setText("It's a draw :-(");
         }
     }
@@ -150,10 +133,8 @@ public class TicTacViewController implements Initializable
     /**
      * Clears the game board in the GUI
      */
-    private void clearBoard()
-    {
-        for(Node n : gridPane.getChildren())
-        {
+    private void clearBoard() {
+        for (Node n : gridPane.getChildren()) {
             Button btn = (Button) n;
             btn.setText("");
         }
