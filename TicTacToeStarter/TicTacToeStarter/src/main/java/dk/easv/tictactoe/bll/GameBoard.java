@@ -18,8 +18,57 @@ public class GameBoard implements IGameBoard
     public void setBoard(char[][] board){
         this.board = board;
     }
+    public int checkBoard(){
+        // Vertical win for X
+        if (board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X'){
+            return 1;
+        } else if (board[1][0] == 'X' && board[1][1] == 'X' && board[1][2] == 'X') {
+            return 1;
+        }else if (board[2][0] == 'X' && board[2][1] == 'X' && board[2][2] == 'X') {
+            return 1;
+        }
+        // Horizontal win for X
+        if (board[0][1] == 'X' && board[1][1] == 'X' && board[2][1] == 'X'){
+            return 1;
+        } else if (board[0][2] == 'X' && board[1][2] == 'X' && board[2][2] == 'X') {
+            return 1;
+        }else if (board[0][0] == 'X' && board[1][0] == 'X' && board[2][0] == 'X') {
+            return 1;
+        }
+        // Diagonal win for X
+        if (board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 'X'){
+            return 1;
+        } else if (board[2][0] == 'X' && board[1][1] == 'X' && board[0][2] == 'X') {
+            return 1;
+        }
+        // Vertical win for O
+        if (board[0][0] == 'O' && board[0][1] == 'O' && board[0][2] == 'O'){
+            return 2;
+        } else if (board[1][0] == 'O' && board[1][1] == 'O' && board[1][2] == 'O') {
+            return 2;
+        }else if (board[2][0] == 'O' && board[2][1] == 'O' && board[2][2] == 'O') {
+            return 2;
+        }
+        // Horizontal win for O
+        if (board[0][1] == 'O' && board[1][1] == 'O' && board[2][1] == 'O'){
+            return 2;
+        } else if (board[0][2] == 'X' && board[1][2] == 'X' && board[2][2] == 'O') {
+            return 2;
+        }else if (board[0][0] == 'O' && board[1][0] == 'O' && board[2][0] == 'O') {
+            return 2;
+        }
+        // Diagonal win for O
+        if (board[0][0] == 'O' && board[1][1] == 'O' && board[2][2] == 'O'){
+            return 2;
+        } else if (board[2][0] == 'O' && board[1][1] == 'O' && board[0][2] == 'O') {
+            return 2;
+        }
+        else {
+            return -1;
+        }
+    }
 
-    /* Returns 0 for player 0, 1 for player 1.
+    /** Returns 0 for player 0, 1 for player 1.
      *
      * @return int Id of the next player.
      */
@@ -66,6 +115,7 @@ public class GameBoard implements IGameBoard
             setBoard(board);
 
             System.out.println(Arrays.deepToString(board));
+            System.out.println(checkBoard());
             return true;
 
         }
@@ -83,9 +133,14 @@ public class GameBoard implements IGameBoard
      */
     public boolean isGameOver()
     {
-
         //TODO Implement this method
-        return false;
+
+            if (checkBoard() != -1){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -95,8 +150,14 @@ public class GameBoard implements IGameBoard
      */
     public int getWinner()
     {
+        if(checkBoard() == 1){
+            return 1;
+        } else if (checkBoard() == 2) {
+            return 0;
+        } else {
+            return -1;
+        }
         //TODO Implement this method
-        return -1;
     }
 
     /**
