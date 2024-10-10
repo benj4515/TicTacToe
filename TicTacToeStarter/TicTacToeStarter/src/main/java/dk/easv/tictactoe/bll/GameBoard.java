@@ -116,8 +116,6 @@ public class GameBoard implements IGameBoard {
      * @return true if the game is over, else it will return false.
      */
     public boolean isGameOver() {
-        //TODO Implement this method
-
         if (checkBoard() != -1 | i >= 9) {
             return true;
         } else {
@@ -138,7 +136,6 @@ public class GameBoard implements IGameBoard {
         } else {
             return -1;
         }
-        //TODO Implement this method
     }
 
     /**
